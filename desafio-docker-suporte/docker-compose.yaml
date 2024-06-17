@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
   app:
     build:
       context: app
@@ -29,10 +28,13 @@ services:
     restart: always
     tty: true
     volumes:
+      - ./database:/docker-entrypoint-initdb.d # Mapeia o diretório database local para o diretório de scripts de inicialização do MySQL
       - mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=nodedb
       - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3306:3306 # Mapeia a porta 3306 do contêiner MySQL para o host para permitir conexões externas ao banco de dados.
 
 volumes:
   mysql:
